@@ -1,0 +1,1 @@
+# Odoo_Asset_modules
