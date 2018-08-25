@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="assets_form_view" model="ir.ui.view">
+            <field name="name">asset.asset.common.form</field>
+            <field name="model">asset.asset</field>
+            <field name="inherit_id" ref="asset.assets_form_view" />
+            <field name="priority" eval="8" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button string="Convert to product" type="object" name="button_asset_to_product" class="oe_highlight oe_inline" icon="fa-book"></button>
+                </xpath>
+                <xpath expr="//div[@name='buttons']" position="inside">
+                                <div>
+                                    <button name="button_one" class="oe_inline oe_stat_button" icon="fa-cogs"> 
+                                        <field name="button_one"/>
+                                    </button>
+                                    <button name="button_two" class="oe_inline oe_stat_button" icon="fa-cogs">
+                                        <field name="button_two"/>
+                                    </button>
+                                    <button name="button_three" class="oe_inline oe_stat_button" icon="fa-cogs">
+                                        <field name="button_three"/>
+                                    </button>
+                                </div>
+                                <div>
+                                    <button name="button_four" class="oe_inline oe_stat_button" icon="fa-cogs">
+                                        <field name="button_four"/>
+                                    </button>
+                                    <button name="button_five" class="oe_inline oe_stat_button" icon="fa-cogs">
+                                        <field name="button_five"/>
+                                    </button>
+                                    <button name="button_six" class="oe_inline oe_stat_button" icon="fa-cogs">
+                                        <field name="button_six"/>
+                                    </button>
+                                </div>
+
+                </xpath>
+                <xpath expr="//page[@name='info']" position="before">
+                            <page name="many_assets" string="Компоненты">
+                                <field name='asset_group_ids'>
+                                    <tree string="Asset components" editable="bottom">
+                                        <field name="child_asset_id" string="Компоненты актива"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="asset_parameters" string="Параметры актива">
+                                <field name='parameter_ids'>
+                                    <tree string="Parameters" editable="bottom">
+                                        <field name="parameter_name" string="Тип параметра"/>
+                                        <field name="value" string="Значение"/>
+                                        <field name="mkey" string="Единица измерения"/>
+                                        <field name="is_required" string="Важный"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="many_asset_parameters" string="Параметры компонентов">
+                                <field name='other_parameter_ids'>
+                                    <tree string="Parameters" editable="bottom">
+                                        <field name="parameter_name" string="Тип параметра"/>
+                                        <field name="value" string="Значение"/>
+                                        <field name="mkey" string="Единица измерения"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="structure_image" string="Схемы">
+                                <field name="asset_image" string="Конструкция актива" widget="image" style="width:100%"/>
+                            </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="asset_group_form_view" model="ir.ui.view">
+            <field name="name">asset.group.form</field>
+            <field name="model">asset.group</field>
+            <field name="priority" eval="8" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <group>
+                        <field name="child_asset_id" string="Asset"/>
+                        <!-- <field name="assetcustom"/> -->
+                </group>
+                <group>
+                </group>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="asset_group_act_window">
+                    <field name="name">Asset custom</field>
+                    <field name="res_model">asset.group</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain">[]</field>
+                    <field name="help" type="html">
+                        <p class="oe_view_nocontent_create">Добавить новое
+                        </p>
+                    </field>
+        </record>
+
+        <record id="asset_group_tree_view" model="ir.ui.view">
+                    <field name="name">asset.group.tree</field>
+                    <field name="model">asset.group</field>
+                    <field name="priority" eval="8" />
+                    <field name="view_type">tree</field>
+                    <field name="arch" type="xml">
+                        <tree string="Asset custom tree">
+                            <field name="child_asset_id" string="Asset"/>
+                            <!-- <field name="assetcustom"/> -->
+                        </tree>
+                    </field>
+        </record>
+
+
+        <record id="asset_parameter_form_view" model="ir.ui.view">
+            <field name="name">asset.parameter.form</field>
+            <field name="model">asset.parameter</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+
+                <form string="parameters">
+                    <sheet>
+                        <group>
+                            <field name="parameter_name" string="Parameter type"/>
+                            <field name="value" string="Value"/>
+                            <field name="mkey" string="Unit of measurement"/>
+                            <field name="is_required" string="Required"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="asset_parameter_tree_view" model="ir.ui.view">
+                    <field name="name">asset.parameter.tree</field>
+                    <field name="model">asset.parameter</field>
+                    <field name="priority" eval="8" />
+                    <field name="view_type">tree</field>
+                    <field name="arch" type="xml">
+                        <tree string="Asset custom tree">
+                            <field name="parameter_name" string="Parameter type"/>
+                            <field name="value" string="Value"/>
+                            <field name="mkey" string="Unit of measurement"/>
+                            <field name="is_required" string="Required"/>
+                        </tree>
+                    </field>
+        </record>
+        <record model="ir.actions.act_window" id="asset_parameter_act_window">
+                    <field name="name">Asset parameter</field>
+                    <field name="res_model">asset.parameter</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain">[]</field>
+                    <field name="help" type="html">
+                        <p class="oe_view_nocontent_create">Добавить новый
+                        </p>
+                    </field>
+        </record>
+
+
+
+        <record id="parameter_type_form_view" model="ir.ui.view">
+            <field name="name">parameter.type.form</field>
+            <field name="model">parameter.type</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+
+                <form string="parameter">
+                    <sheet>
+                        <group>
+                            <field name="name" string="Parameter type"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="asset_mkey_form_view" model="ir.ui.view">
+            <field name="name">asset.mkey.form</field>
+            <field name="model">asset.mkey</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+
+                <form string="MKEI">
+                    <sheet>
+                        <group>
+                            <field name="name" string="Unit of measurement"/>
+                            <field name="code" string="MKEI code"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+<!-- <button name="toggle_active" type="object" groups="base.group_user"
+                                class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button"
+                                options='{"terminology": "archive"}'/>
+                        </button> -->
+        <menuitem id="asset_group_menu" name="Список Asset custom" action="asset_group_act_window"/>
+    </data>
+</odoo>
